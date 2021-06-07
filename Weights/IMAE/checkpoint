@@ -1,0 +1,2 @@
+model_checkpoint_path: "IMAE.model-399"
+all_model_checkpoint_paths: "IMAE.model-399"
