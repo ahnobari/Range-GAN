@@ -23,7 +23,10 @@ In Range-GAN we take the approach presented in [IM-NET](https://arxiv.org/abs/18
 ## Data
 ![Data Sample](https://github.com/ahnobari/Range-GAN/blob/main/Images/data.png?raw=true)
 The data used in this paper is the airplane subset of the ShapeNET dataset. However, we only use the encodings produced by IMAE to train our GAN model. The pre calculated values are also provided in the data folder.
+
 As discussed in the [paper](https://arxiv.org/abs/1812.02822) we also augment our data to produce better results. This augmentation is arduous and involves significant manual curation. Therefore, to allow for the replication of the results in the paper we have also included the augmented dataset we used in our work. To reproduce the results in the paper please use the augmented data instead. (Augmentation Code will be provided in the near future with automated curation)
+
+If you require to use your own data, please create hdf5 files with encodings labeled as zs and paramteres that are to be conditioned for using Range-GAN(Further details provided later).
 
 1. Go to example directory: 
 
