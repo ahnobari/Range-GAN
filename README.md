@@ -1,5 +1,5 @@
 # Range-GAN
-![Range-GAN Architecture]()
+![Range-GAN Architecture](https://github.com/ahnobari/Range-GAN/blob/Images/Range-GAN.png?raw=true)
 This repository can be used to reproduce the results presented in the paper: [Range-GAN: Range-Constrained Generative Adversarial Network for Conditioned Design Synthesis](https://arxiv.org/abs/2103.06230)
 
 ## Required packages
