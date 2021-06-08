@@ -12,11 +12,20 @@ This repository can be used to reproduce the results presented in the paper: [Ra
 - tqdm
 - Pymcubes
 
+## Project Page
+For further information and latest news on the project visit [Range-GAN](https://decode.mit.edu/projects/rangegan/)
+
 ## Usage
 
-### Synthetic examples
+### 3D Shape Synthesis Background
+In Range-GAN we take the approach presented in [IM-NET](https://arxiv.org/abs/1812.02822) to generate 3D shapes. In our project we use the Airplane models in ShapeNet to train an IMAE model to encode 3D shapes into 256 dimensional vectors. If you want to experiment with other 3D shapes please refer to the [IM-NET Code](https://github.com/czq142857/IM-NET). Here we provide the weights of the trained IMAE model we used for our paper (in the Weights directory).
 
-1. Go to example directory:
+## Data
+![Data Sample](https://github.com/ahnobari/Range-GAN/blob/main/Images/data.png?raw=true)
+The data used in this paper is the airplane subset of the ShapeNET dataset. However, we only use the encodings produced by IMAE to train our GAN model. The pre calculated values are also provided in the data folder.
+As discussed in the [paper](https://arxiv.org/abs/1812.02822) we also augment our data to produce better results. This augmentation is arduous and involves significant manual curation. Therefore, to allow for the replication of the results in the paper we have also included the augmented dataset we used in our work. To reproduce the results in the paper please use the augmented data instead. (Augmentation Code will be provided in the near future with automated curation)
+
+1. Go to example directory: 
 
    ```bash
    cd Synthetic
