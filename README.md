@@ -47,27 +47,28 @@ To train using the data provied here and replicate the results of the paper one 
    ```
    add ```--data ./augmented``` to use augmented data (paper results use this)
 4. Other Paramters Which Can be Adjusted
-   optional arguments:
+   
 
    ```
-   -h, --help           show this help message and exit
-  --data DATA           The path to the data. Default: ./data use ./augmented if you create an augmented dataset
-  --save_name SAVE_NAME The file name of the checkpoint saved in the Weights folder. Default: experiment
-  --estimator_lr ESTIMATOR_LR   Initial estimator learning rate before decay. Default: 1e-4
-  --estimator_train_steps ESTIMATOR_TRAIN_STEPS Number of training steps for estimator. Default: 10000
-  --estimator_batch_size ESTIMATOR_BATCH_SIZE   Batch size for estimator Default: 128
-  --phi PHI             phi. Default: 50.0
-  --lambda1 LAMBDA1     lambda1. Default: 4.0
-  --lambda2 LAMBDA2     lambda2. Default: 0.1
-  --disc_lr DISC_LR     Initial discriminator learning rate before decay. Default: 1e-4
-  --gen_lr GEN_LR       Initial discriminator learning rate before decay. Default: 1e-4
-  --train_steps TRAIN_STEPS Number of training steps. Default: 50000
-  --batch_size BATCH_SIZE   Batch size used for GAN training. Default: 32
-  --custom_data CUSTOM_DATA If custom data is being used then add this flag and indicate the names of parameters in custom_param values.
-  --param PARAM         The parameter to train for. Default: ratio. Either one of: ratio, volume, both
-  --custom_dataset CUSTOM_DATASET   The name of the dataset in the data folder. Default: None. Depends on the custom dataset.
-  --custom_param1 CUSTOM_PARAM1 The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom dataset.
-  --custom_param2 CUSTOM_PARAM2 The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom dataset.
+    optional arguments:
+    -h, --help            show this help message and exit
+    --data DATA           The path to the data. Default: ./data use ./augmented if you create an augmented dataset
+    --save_name SAVE_NAME The file name of the checkpoint saved in the Weights folder. Default: experiment
+    --estimator_lr ESTIMATOR_LR   Initial estimator learning rate before decay. Default: 1e-4
+    --estimator_train_steps ESTIMATOR_TRAIN_STEPS Number of training steps for estimator. Default: 10000
+    --estimator_batch_size ESTIMATOR_BATCH_SIZE   Batch size for estimator Default: 128
+    --phi PHI             phi. Default: 50.0
+    --lambda1 LAMBDA1     lambda1. Default: 4.0
+    --lambda2 LAMBDA2     lambda2. Default: 0.1
+    --disc_lr DISC_LR     Initial discriminator learning rate before decay. Default: 1e-4
+    --gen_lr GEN_LR       Initial discriminator learning rate before decay. Default: 1e-4
+    --train_steps TRAIN_STEPS Number of training steps. Default: 50000
+    --batch_size BATCH_SIZE   Batch size used for GAN training. Default: 32
+    --custom_data CUSTOM_DATA If custom data is being used then add this flag and indicate the names of parameters in custom_param values.
+    --param PARAM         The parameter to train for. Default: ratio. Either one of: ratio, volume, both
+    --custom_dataset CUSTOM_DATASET   The name of the dataset in the data folder. Default: None. Depends on the custom dataset.
+    --custom_param1 CUSTOM_PARAM1 The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom dataset.
+    --custom_param2 CUSTOM_PARAM2 The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom dataset.
    ```
 
    The trained models will be saved under the specified folder under the subdirectory of Weights under the each models folder and the result plots will be saved under the results directory. Change save_name argument to control this.
