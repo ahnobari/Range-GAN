@@ -47,13 +47,9 @@ To train using the data provied here and replicate the results of the paper one 
    ```
    add ```--data ./augmented``` to use augmented data (paper results use this)
 4. Other Paramters Which Can be Adjusted
-   ```bash
-   optional arguments:
-
    ```
-
-   ```bash
-   -h, --help            show this help message and exit
+   optional arguments:
+   -h, --help           show this help message and exit
   --data DATA           The path to the data. Default: ./data use ./augmented if you create an augmented dataset
   --save_name SAVE_NAME
                         The file name of the checkpoint saved in the Weights folder. Default: experiment
