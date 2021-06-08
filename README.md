@@ -20,7 +20,7 @@ For further information and latest news on the project visit [Range-GAN](https:/
 ### 3D Shape Synthesis Background
 In Range-GAN we take the approach presented in [IM-NET](https://arxiv.org/abs/1812.02822) to generate 3D shapes. In our project we use the Airplane models in ShapeNet to train an IMAE model to encode 3D shapes into 256 dimensional vectors. If you want to experiment with other 3D shapes please refer to the [IM-NET Code](https://github.com/czq142857/IM-NET). Here we provide the weights of the trained IMAE model we used for our paper (in the Weights directory).
 
-## Data
+### Data
 ![Data Sample](https://github.com/ahnobari/Range-GAN/blob/main/Images/data.png?raw=true)
 The data used in this paper is the airplane subset of the ShapeNET dataset. However, we only use the encodings produced by IMAE to train our GAN model. The pre calculated values are also provided in the data folder.
 
@@ -28,156 +28,68 @@ As discussed in the [paper](https://arxiv.org/abs/1812.02822) we also augment ou
 
 If you require to use your own data, please create hdf5 files with encodings labeled as zs and paramteres that are to be conditioned for using Range-GAN(Further details provided later).
 
-1. Go to example directory: 
+### Training
+To train using the data provied here and replicate the results of the paper one of the following can be done for each experiment:
 
+1. Train For Aspect Ratio
    ```bash
-   cd Synthetic
+   python run_experiment.py --param ratio --save_name ratio
    ```
-
-2. Train Models:
-
+   add ```--data ./augmented``` to use augmented data (paper results use this)
+2. Train For Volume
    ```bash
-   python train_models.py
+   python run_experiment.py --param volume --save_name volume
    ```
-
-   positional arguments:
-    
+   add ```--data ./augmented``` to use augmented data (paper results use this)
+3. Multi-Objetive Training
+   ```bash
+   python run_experiment.py --param both --save_name MO
    ```
-   model PcDGAN or CcGAN
-   dataset	dataset name (available datasets are Uniform, Uneven, Donut2D)
+   add ```--data ./augmented``` to use augmented data (paper results use this)
+4. Other Paramters Which Can be Adjusted
    ```
-
    optional arguments:
 
    ```
-   -h, --help   show this help message and exit
-   --dominant_mode DOMINANT_MODE    The dominant mode for uneven dataset. Default: 1, Options: Any integet between 0 and 5
-   --mode MODE  Mode of operation, either train or evaluate. Default: Train
-   --vicinal_type   The type of vicinal approach. Default: soft, Options: soft, hard
-   --kappa    Vicinal loss kappa. If negative automatically calculated and scaled by the absolute value of the number. Default: -1.0 for PcDGAN -2.0 for CcGAN
-    --sigma   Vicinal loss sigma. If negative automatically calculated. Default: -1.0
-    --lambda0   PcDGAN lambda0. Default: 3.0
-    --lambda1   PcDGAN lambda1. Default: 0.5
-    --lambert_cutoff    PcDGAN parameter "a". Default: 4.7
-    --gen_lr    Generator learning rate. Default: 1e-4
-    --disc_lr   Discriminator learning rate. Default: 1e-4
-    --train_steps   Number of training steps. Default: 50000
-    --batch_size    GAN training Batch size. Default: 32
-    --id    experiment ID or name. Default:
-    --size  Number of samples to generate at each step for evaluation. Default: 1000
+   -h, --help            show this help message and exit
+  --data DATA           The path to the data. Default: ./data use ./augmented if you create an augmented dataset
+  --save_name SAVE_NAME
+                        The file name of the checkpoint saved in the Weights folder. Default: experiment
+  --estimator_lr ESTIMATOR_LR
+                        Initial estimator learning rate before decay. Default: 1e-4
+  --estimator_train_steps ESTIMATOR_TRAIN_STEPS
+                        Number of training steps for estimator. Default: 10000
+  --estimator_batch_size ESTIMATOR_BATCH_SIZE
+                        Batch size for estimator Default: 128
+  --phi PHI             phi. Default: 50.0
+  --lambda1 LAMBDA1     lambda1. Default: 4.0
+  --lambda2 LAMBDA2     lambda2. Default: 0.1
+  --disc_lr DISC_LR     Initial discriminator learning rate before decay. Default: 1e-4
+  --gen_lr GEN_LR       Initial discriminator learning rate before decay. Default: 1e-4
+  --train_steps TRAIN_STEPS
+                        Number of training steps. Default: 50000
+  --batch_size BATCH_SIZE
+                        Batch size used for GAN training. Default: 32
+  --custom_data CUSTOM_DATA
+                        If custom data is being used then add this flag and indicate the names of parameters in
+                        custom_param values.
+  --param PARAM         The parameter to train for. Default: ratio. Either one of: ratio, volume, both
+  --custom_dataset CUSTOM_DATASET
+                        The name of the dataset in the data folder. Default: None. Depends on the custom dataset.
+  --custom_param1 CUSTOM_PARAM1
+                        The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom
+                        dataset.
+  --custom_param2 CUSTOM_PARAM2
+                        The parameter to train for(Only if using custom dataset). Default: None. Depends on the custom
+                        dataset.
    ```
 
-   The trained models will be saved under the specified dataset folder under the subdirectory of Weights under the each models folder and the result plots will be saved under the directory of the dataset under the subdirectory Evaluation under each models folder. Change the id argument everytime to prevent over-writing previous weights.
+   The trained models will be saved under the specified folder under the subdirectory of Weights under the each models folder and the result plots will be saved under the results directory. Change save_name argument to control this.
    
-   Note that we can set `lambda0` and `lambda1` to zeros to train a CcGAN with only singular vicinal loss.
+   Note that we can set `lambda2` to zero to train without uniformity loss.
 
-3. To reproduce the results of the paper train atleast 3 versions of each model(although for the paper 10 were trained for each model) by changing the id argument during training and run the following:
-
-    ```bash
-    python evaluation.py
-    ```
-
-    positional arguments:
-    
-   ```
-   dataset	dataset name (available datasets are Uniform, Uneven, Donut2D)
-   ```
-
-   optional arguments:
-
-
-   ```
-   -h, --help   show this help message and exit
-   --size SIZE  Number of samples to generate at each step for evaluation. Default: 1000
-   ```
-   
-   After this the Resulting Figures(Similar to what is presented in the paper) will be produced under the dataset directory under the subdirectory of Evaluation.
-
-### Airfoil example
-
-1. Install [XFOIL](https://web.mit.edu/drela/Public/web/xfoil/). Only necessary if you are on Linux. For windows the executables are provided under the XFOIL_Windows folder.
-
-2. Go to example directory:
-
+4. Using A Custom Dataset
    ```bash
-   cd Airfoil
+   python run_experiment.py --custom_data --custom_dataset dataset_name --custom_param1 param1 --custom_param2 param2
    ```
-
-3. Download the airfoil dataset [here](https://drive.google.com/drive/folders/1x1SrAX28ajLD0T_zbTUhcYxg2M5kudHm?usp=sharing) and extract the NPY files into `Airfoil/data/`.
-
-
-4. First train an embedder estimator pair:
-
-   ```bash
-   python train_estimator_embedder.py
-   ```
-    optional arguments:
-
-   ```
-   -h, --help   show this help message and exit
-   --data   The path to the data. Default: ./data
-   --estimator_save_name    The file name of the best checkpoint saved in the weights estimator folder. Default:best_checkpoint
-   --embedder_save_name     The file name of the best checkpoint saved in the embedder weights folder. Default:best_checkpoint
-   --estimator_lr   Initial estimator learning rate before decay. Default: 1e-4
-   --embedder_lr    Initial embedder learning rate before decay. Default: 1e-4
-   --estimator_train_steps  Number of training steps for estimator. Default: 10000
-   --embedder_train_steps   Number of training steps for embedder. Default: 10000
-   --estimator_batch_size   Batch size for estimator Default: 256
-   --embedder_batch_size    Batch size for embedder Default: 256
-   ```
-
-   The weights of both models will be saved under the Weights folder. Remember if you name the pair differently for GAN training. Also use only one pair for each experiment as cross-validation is done using one pair which both models were based on.
-
-5. Train Models:
-
-   ```bash
-   python train_models.py
-   ```
-
-   positional arguments:
-    
-   ```
-   model PcDGAN or CcGAN
-   ```
-
-   optional arguments:
-
-   ```
-   -h, --help   show this help message and exit
-   --mode MODE  Mode of operation, either train or evaluate. Default: Train
-   --vicinal_type   The type of vicinal approach. Default: soft, Options: soft, hard
-   --kappa  Vicinal loss kappa. If negative automatically calculated and scaled by the absolute value of the number. Default: -1.0 for PcDGAN -2.0 for CcGAN
-   --sigma  Vicinal loss sigma. If negative automatically calculated. Default: -1.0
-   --estimator  Name of the estimator checkpoint saved in the weights folder. Default: best_checkpoint
-   --embedder   Name of the embedder checkpoint saved in the weights folder. Default: best_checkpoint
-   --lambda0    PcDGAN lambda0. Default: 3.0
-   --lambda1    PcDGAN lambda1. Default: 0.4
-   --lambert_cutoff PcDGAN parameter "a". Default: 4.7
-   --gen_lr GEN_LR  Generator learning rate. Default: 1e-4
-   --disc_lr DISC_LR    Discriminator learning rate. Default: 1e-4
-   --train_steps    Number of training steps. Default: 20000
-   --batch_size     GAN training Batch size. Default: 32
-   --size   Number of samples to generate at each step. Default: 1000
-   --id     experiment ID or name. Default:
-   ```
-   Change the id argument everytime to prevent over-writing previous weights. Train each model atleast 3 times to reproduce paper results (for the paper 10 models were trained). The results of each model will be saved under the Evaluation Directory.
-
-
-6. To reproduce the results of the paper train atleast 3 versions of each model(although for the paper 10 were trained for each model) by changing the id argument during training and run the following:
-
-    ```bash
-    python evaluation.py
-    ```
-
-   optional arguments:
-
-
-   ```
-   -h, --help   show this help message and exit
-   --estimator  Name of the estimator checkpoint saved in the weights folder. Default: best_checkpoint
-   --embedder   Name of the embedder checkpoint saved in the weights folder. Default: best_checkpoint
-   --simonly    Only evaluate based on simluation. Default: 0(False). Set to 1 for True
-   --size   Number of samples to generate at each step. Default: 1000
-   ```
-   
-   After this the Resulting Figures(Similar to what is presented in the paper) will be produced under the Evaluation directory.
+   Here you need to add the --custom_data flag and indicate the dataset_name. The dataset_name is the name of the hdf5 files in the data folder. Note that you must have a test set and a training set in the data folder. The custom_param1 argumnets are the name of the parameters in the hdf5 files. param2 is optional if multi-objective is being investigated.

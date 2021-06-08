@@ -140,7 +140,7 @@ def performance_plot_MO(model, Y, save_location):
     plt.title('Multi-Constriant Condition Satisfaction')
     plt.savefig(save_location+'.pdf',dpi=300, bbox_inches='tight')
     
-def real_performance_plot_SO(model, Y, save_location, IMAE, title, param, min_y, max_y, res):
+def real_performance_plot_SO(model, Y, save_location, IMAE, min_y, max_y, scale, res):
     satisfaction = []
     data_sat = []
     range_size = 0.1
@@ -151,12 +151,8 @@ def real_performance_plot_SO(model, Y, save_location, IMAE, title, param, min_y,
         zs = model.generator(tf.random.normal(shape=[batch_size,64]),np.array(condition*batch_size),training=False).numpy()
         vals,ratios,volumes = IMAE.synthesize(zs,res,500000)
         
-        if param == 'ratio':
-            ys = np.array(ratios)
-            ys = (ys - min_y)/(max_y-min_y)/0.7
-        else:
-            ys = np.array(volumes)
-            ys = (ys - min_y)/(max_y-min_y)/0.5
+        ys = np.array(volumes)
+        ys = (ys - min_y)/(max_y-min_y)/scale
             
         sat = np.sum(np.logical_and(ys<condition[0][1],ys>condition[0][0]))/ys.shape[0]
         satisfaction.append(sat)
@@ -170,4 +166,5 @@ def real_performance_plot_SO(model, Y, save_location, IMAE, title, param, min_y,
     plt.plot(np.linspace(0.0,(1-range_size),n_ranges),satisfaction,color='#004c6d',linewidth=5)
     plt.plot(np.linspace(0.0,(1-range_size),n_ranges),data_sat,color='grey',linewidth=5)
     plt.legend(['Range-GAN','Data'])
+    plt.title('Real World Performance')
     plt.savefig(save_location+'_real.pdf',dpi=300, bbox_inches='tight')
