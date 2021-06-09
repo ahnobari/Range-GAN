@@ -140,13 +140,12 @@ if not args.custom_data:
         performance_plot_MO(model, Y, './results/'+args.save_name)
     elif args.param == 'ratio':
         performance_plot_SO(model, Y, './results/'+args.save_name, 'Aspect Ratio')
-        real_performance_plot_SO(model, Y, './results/'+args.save_name, imnet_gen, min_y[0], max_y[0], 0.7, 64)
+        real_performance_plot_SO(model, Y, './results/'+args.save_name, imnet_gen, 'ratio', min_y[0], max_y[0], 0.7, 64)
     elif args.param == 'volume':
         performance_plot_SO(model, Y, './results/'+args.save_name, 'Volume Ratio')
-        real_performance_plot_SO(model, Y, './results/'+args.save_name, imnet_gen, min_y[1], max_y[1], 0.5, 64)
+        real_performance_plot_SO(model, Y, './results/'+args.save_name, imnet_gen, 'volume', min_y[1], max_y[1], 0.5, 64)
 else:
     if args.param2:
         performance_plot_MO(model, Y, './results/'+args.save_name)
     else:
         performance_plot_SO(model, Y, './results/'+args.save_name, args.param1)
-        real_performance_plot_SO(model, Y, './results/'+args.save_name, imnet_gen, min_y[0], max_y[0], 1.0, 64)
