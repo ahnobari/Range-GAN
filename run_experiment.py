@@ -19,7 +19,7 @@ import tensorflow_probability as tfp
 from utils import *
 
 
-parser = argparse.ArgumentParser(description='Estimator Traning')
+parser = argparse.ArgumentParser(description='Range-GAN Training')
 parser.add_argument('--data', type=str, help='The path to the data. Default: ./data use ./augmented if you create an augmented dataset', default='./data')
 parser.add_argument('--save_name', type=str, help='The file name of the checkpoint saved in the Weights folder. Default: experiment', default='experiment')
 parser.add_argument('--estimator_lr', type=float, default=1e-4, help='Initial estimator learning rate before decay. Default: 1e-4')

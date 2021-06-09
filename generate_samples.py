@@ -18,7 +18,7 @@ from IMNET_GEN_TF2 import *
 import tensorflow_probability as tfp
 from utils import *
 
-parser = argparse.ArgumentParser(description='Estimator Traning')
+parser = argparse.ArgumentParser(description='Sample Generator')
 parser.add_argument('--data', type=str, help='The path to the data. Default: ./data use ./augmented if you create an augmented dataset', default='./data')
 parser.add_argument('--random_seed', type=int, default=None, help='Set the random seed used to generate samples.')
 parser.add_argument('--save_name', type=str, help='The file name of the checkpoint saved in the Weights folder. Default: experiment', default='experiment')

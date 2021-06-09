@@ -92,3 +92,41 @@ To train using the data provied here and replicate the results of the paper one 
    python run_experiment.py --custom_data --custom_dataset dataset_name --custom_param1 param1 --custom_param2 param2
    ```
    Here you need to add the --custom_data flag and indicate the dataset_name. The dataset_name is the name of the hdf5 files in the data folder. Note that you must have a test set and a training set in the data folder. The custom_param1 argumnets are the name of the parameters in the hdf5 files. param2 is optional if multi-objective is being investigated.
+
+5. Generating 3D samples
+   To generate 3D samples using any saved model use:
+
+   ```bash
+   python generate_samples.py --save_name model_checkpoint
+   ```
+   Where you pass the save name of the model that was trained as described before. To set other parameters like range and number of samples, etc. see:
+
+   ```bash
+    optional arguments:
+    -h, --help            show this help message and exit
+    --data DATA           The path to the data. Default: ./data use ./augmented if you create an augmented dataset
+    --random_seed RANDOM_SEED
+                            Set the random seed used to generate samples.
+    --save_name SAVE_NAME
+                            The file name of the checkpoint saved in the Weights folder. Default: experiment
+    --batch_size BATCH_SIZE
+                            Batch size used for IMAE. Default: 200000. Change based on GPU performance.
+    --resolution RESOLUTION
+                            Resolution of the voxel model generated. Default: 256. Determines the quality of samples.
+    --n_samples N_SAMPLES
+                            Number of samples to generate.
+    --param_type PARAM_TYPE
+                            Which type of parameter. Default: ratio. Either of: ratio, volume, both, custom. is not custom
+                            the actual label will be measured.
+    --only_valid ONLY_VALID
+                            If this flag is raised only samples that meet the input condition will be saved (less than
+                            n_samples). Only for non-custom cases.
+    --param1_start PARAM1_START
+                            Start of range for parameter 1. Defaulr: 0.0
+    --param1_end PARAM1_END
+                            end of range for paramter 1. Default: 0.1
+    --param2_start PARAM2_START
+                            Start of range for parameter 2. Default: None. Only input if multi-objective model is used.
+    --param2_end PARAM2_END
+                            End of range for parameter 2. Default: None. Only input if multi-objective model is used.
+    ```
